@@ -250,6 +250,30 @@ useEffect(() => {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+  const btnLight = {
+    padding: "10px 14px",
+    borderRadius: 12,
+    border: "1px solid #ddd",
+    background: "#fff",
+    color: "#111",
+  } as const;
+
+  const btnDark = {
+    padding: "10px 14px",
+    borderRadius: 12,
+    border: "1px solid #111",
+    background: "#111",
+    color: "#fff",
+  } as const;
+
+  const selectStyle = {
+    padding: "10px 12px",
+    borderRadius: 12,
+    border: "1px solid #ddd",
+    background: "#fff",
+    color: "#111",
+  } as const;
+
 return (
     <main style={{ maxWidth: 1200, margin: "40px auto", padding: 16, fontFamily: "ui-sans-serif" }}>
       <h1 style={{ fontSize: 28, fontWeight: 700 }}>三语通</h1>
@@ -267,7 +291,7 @@ return (
         <select
           value={inputLang}
           onChange={(e) => setInputLang(e.target.value as any)}
-          style={{ padding: "10px 12px", borderRadius: 12, border: "1px solid #ddd", background: "#fff" }}
+          style={selectStyle}
           title="输入语言（Auto 不会改变下拉框，只会显示本次识别）"
         >
           <option value="auto">Auto</option>
@@ -283,7 +307,7 @@ return (
         <button
           onClick={startAIRecord}
           disabled={recState !== "idle"}
-          style={{ padding: "10px 14px", borderRadius: 12, border: "1px solid #ddd", background: "#fff" }}
+          style={btnLight}
         >
           {recState === "recording" ? "🎙 录音中…" : "🎙 语音输入(AI)"}
         </button>
@@ -291,7 +315,8 @@ return (
         <button
           onClick={stopAIRecord}
           disabled={recState !== "recording"}
-          style={{ padding: "10px 14px", borderRadius: 12, border: "1px solid #ddd", background: "#fff" }}
+          style={btnLight}
+
         >
           ⏹ 停止录音
         </button>
@@ -307,7 +332,7 @@ return (
         <button
           onClick={() => runTranslate()}
           disabled={loading || !text.trim()}
-          style={{ padding: "10px 14px", borderRadius: 12, border: "1px solid #111", background: "#111", color: "#fff" }}
+         style={btnDark}
         >
           {loading ? "翻译中…" : "一键三语"}
         </button>
@@ -315,7 +340,7 @@ return (
         <button
           onClick={stopTranslate}
           disabled={!loading}
-          style={{ padding: "10px 14px", borderRadius: 12, border: "1px solid #ddd", background: "#fff" }}
+          style={btnLight}
           title="停止翻译请求"
         >
           停止
@@ -323,7 +348,7 @@ return (
 
         <button
           onClick={stopSpeak}
-          style={{ padding: "10px 14px", borderRadius: 12, border: "1px solid #ddd", background: "#fff" }}
+         style={btnLight}
           title="停止朗读"
         >
           停止朗读
