@@ -66,7 +66,9 @@ async function uploadToTempOss(policyData: any, fileBuf: Buffer, mimeType: strin
   form.append("x-oss-forbid-overwrite", policyData.x_oss_forbid_overwrite);
   form.append("key", key);
   form.append("success_action_status", "200");
-  form.append("file", new Blob([fileBuf], { type: mimeType }), fileName);
+  const u8 = new Uint8Array(fileBuf);
+form.append("file", new Blob([u8], { type: mimeType }), fileName);
+
 
   const upRes = await fetch(uploadHost, { method: "POST", body: form });
   if (!upRes.ok) {
