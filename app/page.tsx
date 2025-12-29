@@ -40,6 +40,7 @@ const TTS_LANG_DE = "de-DE";
 
 export default function Home() {
   const [text, setText] = useState("");
+const [isMobile, setIsMobile] = useState(false);
 const [autoTranslate, setAutoTranslate] = useState(true);
 const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [out, setOut] = useState<{ zh?: string; en?: string; de?: string; error?: string }>({});
@@ -241,7 +242,15 @@ useEffect(() => {
     if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
   };
 }, [text, autoTranslate, recState]);
-  return (
+    useEffect(() => {
+    const update = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+return (
     <main style={{ maxWidth: 1200, margin: "40px auto", padding: 16, fontFamily: "ui-sans-serif" }}>
       <h1 style={{ fontSize: 28, fontWeight: 700 }}>三语通</h1>
       <p style={{ opacity: 0.7, marginTop: 6 }}>中 / 英 / 德 三语互译（千问）+ 德语词典（极速/详情两步）+ AI 语音输入</p>
@@ -325,7 +334,7 @@ useEffect(() => {
         {out.error && <span style={{ color: "crimson" }}>{out.error}</span>}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1.25fr", gap: 12, marginTop: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr 1.25fr", gap: 12, marginTop: 16 }}>
         <SimpleCard
           title="中文"
           content={out.zh}
