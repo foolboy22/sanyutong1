@@ -406,6 +406,17 @@ function SimpleCard({
   onCopy: () => void;
   onSpeak?: () => void;
 }) {
+  const iconBtn = {
+    width: 44,
+    height: 36,
+    borderRadius: 12,
+    border: "1px solid #ddd",
+    background: "#fff",
+    color: "#111", // ✅ 关键：保证字/emoji是黑色
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+  } as const;
   return (
     <section style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12, minHeight: 200 }}>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "center" }}>
@@ -415,7 +426,7 @@ function SimpleCard({
             <button
               onClick={onSpeak}
               disabled={!content?.trim()}
-              style={{ borderRadius: 10, border: "1px solid #ddd", background: "#fff", padding: "6px 10px" }}
+              style={iconBtn}
             >
               发音
             </button>
@@ -423,7 +434,7 @@ function SimpleCard({
           <button
             onClick={onCopy}
             disabled={!content?.trim()}
-            style={{ borderRadius: 10, border: "1px solid #ddd", background: "#fff", padding: "6px 10px" }}
+            style={iconBtn}
           >
             复制
           </button>
@@ -454,7 +465,25 @@ function DictCard({
   const hasGerman = germanText.trim().length > 0;
   const isFast = lex?.mode === "fast";
   const isFull = lex?.mode === "full";
+  const iconBtn = {
+    width: 44,
+    height: 36,
+    borderRadius: 12,
+    border: "1px solid #ddd",
+    background: "#fff",
+    color: "#111",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+  } as const;
 
+  const btnLight = {
+    padding: "10px 14px",
+    borderRadius: 12,
+    border: "1px solid #ddd",
+    background: "#fff",
+    color: "#111",
+  } as const;
   return (
     <section style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12, minHeight: 200 }}>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "center" }}>
@@ -465,7 +494,7 @@ function DictCard({
             <button
               onClick={onExpand}
               disabled={loading}
-              style={{ borderRadius: 10, border: "1px solid #ddd", background: "#fff", padding: "6px 10px" }}
+              style={btnLight}
               title="生成全变位 + 例句"
             >
               展开详情
